@@ -1,43 +1,49 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using System.Collections.Generic;
-public class uiManager : MonoBehaviour {
 
+
+public class uiManager : MonoBehaviour {
+	
+	
 	public Button[] buttons;
 	public Text scoreText;
-	bool gameOver;
-	private int score;
-	string username = "Player";
-	//private TextMesh myscoreText;
+	private bool gameOver;
+	//private int score;
+	public Text playerName; //SceneManager
 	
 	void Awake(){
 		
-		scoreText.text = "Score: " + PlayerPrefs.GetInt("PlayerScore");
+		//Puts Player Name on to screen.
+		playerName.text ="Hi:" +  SceneManager.playerUserName; //SceneManager
 		
-		//Debug.Log("Problems" + score);
-	
 	}
 
 	// Use this for initialization
 	void Start () {
-	gameOver = false;
-	score = 0;
-	InvokeRepeating("scoreUpdate",1.0f, 0.5f); 
+	
+		gameOver = false;
+		SceneManager.playerScore = 0;
+		InvokeRepeating("scoreUpdate",1.0f, 0.5f); 
 	
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	scoreText.text = "score:" + score;
+	
+		scoreText.text = "Score:" + SceneManager.playerScore;
+		
+		if(SceneManager.playerScore == 10) {
+			Application.LoadLevel("congratulations");
+		}
 	}
 	
 	void scoreUpdate(){
 	
 		
 		if (! gameOver){
-		score += 1;
+			SceneManager.playerScore += 1;
 			
 		}
 		
@@ -45,23 +51,28 @@ public class uiManager : MonoBehaviour {
 	
 	public void gameOverActivated(){
 	
-			if (score > PlayerPrefs.GetInt("PlayerScore")){
-				PlayerPrefs.SetInt("PlayerScore", score);
-			}
+	
 			
-			gameOver = true;
+		gameOver = true;
 			
 			foreach(Button button in buttons){
 				button.gameObject.SetActive(true);
 			}
-		PlayerPrefs.SetInt("PlayerScore", score);
+		
+		
+		
+	//	SceneManager.playerUserName = (PlayerPrefs.GetString("Player Name"));	
+		
+	//	PlayerPrefs.SetInt("PlayerScore", SceneManager.playerScore);
+		
 		
 	  
 	}
 	
 	public void Play(){
 	
-	Application.LoadLevel("level1");
+		Application.LoadLevel("level1");
+	
 	}
 	
 	public void Pause(){
@@ -77,29 +88,34 @@ public class uiManager : MonoBehaviour {
 	
 	
 	public void Menu(){
+	
+		//Highscores.AddNewHighscore(SceneManager.playerUserName, SceneManager.playerScore);
+		
+		
 		
 		Application.LoadLevel ("menuScene");
 	}
-	public void Exit(){
 	
+	public void Exit(){
+			
+		
 		Application.Quit();
 	}
 	
 	
 	public void showHighScore(){
 		
-		Application.LoadLevel ("highScore");
+		Application.LoadLevel ("leaderBoard");
 		
-		
-		
-}
+				
+    }
 
 	public void Back(){
 	
 		Application.LoadLevel ("level1");
 		
 
-}
+    }
 
 	
 }

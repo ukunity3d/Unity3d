@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GoBack : MonoBehaviour {
+public  class GoBack : MonoBehaviour {
+	
 
 
-	int score;
-    string username = "Player";
+
+
+   
+   void Awake(){
+			
+		SceneManager.playerUserName =(PlayerPrefs.GetString("Player Name"));
+		
+   }
+   
 
 	// Use this for initialization
 	void Start () {
@@ -21,16 +29,19 @@ public class GoBack : MonoBehaviour {
 		
 		
 		
-		score = PlayerPrefs.GetInt("PlayerScore");
+		SceneManager.playerScore = PlayerPrefs.GetInt("PlayerScore");
 		
-		Highscores.AddNewHighscore(username,score);
+		Highscores.AddNewHighscore(SceneManager.playerUserName, SceneManager.playerScore);
 		
-		
-		Debug.Log("MyScore"+ score);
+		Debug.Log("God User Name:" + SceneManager.playerUserName );
+		Debug.Log("God user Score:" + SceneManager.playerScore );
 	
 	}
 	
 	public void Back(){
+	
+	
+		
 		
 		Application.LoadLevel ("level1");
 		

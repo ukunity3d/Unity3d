@@ -21,17 +21,13 @@ public class carController : MonoBehaviour {
 	
 		
 		
-	//	position.x += Input.GetAxis ("Horizontal") * carSpeed * Time.deltaTime;
-		
-	//	position.x = Mathf.Clamp (position.x, -2.4f, 2.4f);
-		
-	//	transform.position = position;
+	
 	
 		Ray ray = Camera.main.ScreenPointToRay ( Input.mousePosition );	
 		
 		transform.position = new Vector3(ray.GetPoint(0f).x, -2.64f , transform.position.z);
 		
-		//position.x = Mathf.Clamp (position.x, -2.4f, 2.4f);
+		;
 		
 	}
 	
